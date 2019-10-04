@@ -44,6 +44,7 @@ public class FlightBooker extends Setup {
 		flightFinder.clickContinue();
 
 		//Select Flight
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		SelectFlightPage selectFlight = new SelectFlightPage(driver);
 		Assert.assertTrue(selectFlight.verifySelectFlight(), "No se encontro la pagina!");
 		Assert.assertTrue(selectFlight.verifyDepartTrip(registerInfo), "El viaje de salida es incorrecto!");
