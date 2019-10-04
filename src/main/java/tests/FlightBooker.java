@@ -1,8 +1,10 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pageObjects.FlightFinderPage;
 import pageObjects.HomePage;
+import pageObjects.SelectFlightPage;
 import utils.ExcelUtils;
 import config.Setup;
 import org.testng.annotations.*;
@@ -31,11 +33,23 @@ public class FlightBooker extends Setup {
 	
 	@Test(dataProvider = "UserRegistration", description="Test Case to Register an user")
 	public void registerUserInformation(String ... registerInfo) throws InterruptedException {
+		//Home page
 		HomePage homePage = new HomePage(driver);
 		homePage.SignIn(registerInfo[0], registerInfo[1]);
-		FlightFinderPage FlightFinder = new FlightFinderPage(driver);
-		FlightFinder.inputContent(registerInfo);
-		FlightFinder.clickContinue();
+
+		//Flight Finder
+		FlightFinderPage flightFinder = new FlightFinderPage(driver);
+		Assert.assertTrue(flightFinder.verifyFlightFinder(), "No se encontro la pagina!");
+		flightFinder.inputContent(registerInfo);
+		flightFinder.clickContinue();
+
+		//Select Flight
+		SelectFlightPage selectFlight = new SelectFlightPage(driver);
+		Assert.assertTrue(selectFlight.verifySelectFlight(), "No se encontro la pagina!");
+		Assert.assertTrue(selectFlight.verifyDepartTrip(registerInfo), "El viaje de salida es incorrecto!");
+		Assert.assertTrue(selectFlight.verifyDepartDate(registerInfo), "La fecha de salida es incorrecta!");
+
+
 
 		Thread.sleep(1000);
 

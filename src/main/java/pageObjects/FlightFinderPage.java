@@ -46,4 +46,8 @@ public class FlightFinderPage {
 
         new Select(flightFinderContent.airline).selectByVisibleText(content[11]);
     }
+
+    public boolean verifyFlightFinder() {
+        return flightFinderContent.pageTitle.equals("Find a Flight: Mercury Tours: ");
+    }
 }

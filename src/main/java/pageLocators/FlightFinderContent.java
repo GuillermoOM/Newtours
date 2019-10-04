@@ -4,6 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class FlightFinderContent {
+    @FindBy(xpath = "/html/head/title")
+    public WebElement pageTitle;
+
     @FindBy(xpath = "//input[@value = 'roundtrip']")
     public WebElement radioRoundTrip;
 
