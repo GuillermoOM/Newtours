@@ -30,13 +30,13 @@ public class SelectFlightPage {
     }
 
     public void getDepartFlights(String[] content) {
-        List<WebElement> departs = selectFlightContent.departTable.findElements(By.xpath("/tr"));
+        List<WebElement> departs = selectFlightContent.departTable.findElements(By.tagName("tr"));
         for (WebElement i : departs){
             if (departs.indexOf(i) > 1 && departs.indexOf(i) % 2 == 0) {
-                System.out.println("\n" + i.findElement(By.xpath("//b[contains(text(), '" + content[11] + "')]")).getText());
-                System.out.println("Departs: " + i.findElement(By.xpath("//b[contains(text(), '" + content[11] + "')]//parent::font//parent::td//following-sibling::td//child::font")).getText());
-                System.out.println("Stops: " + i.findElement(By.xpath("//b[contains(text(), '" + content[11] + "')]//parent::font//parent::td//following-sibling::td//following-sibling::td//child::font")).getText());
-                System.out.println(i.findElement(By.xpath("//b[contains(text(), 'Price:')]")).getText());
+                System.out.println("\n" + i.findElement(By.xpath("/td[2]/font/b")).getText());
+                System.out.println("Departs: " + i.findElement(By.xpath("/td[3]/font")).getText());
+                System.out.println("Stops: " + i.findElement(By.xpath("/td[4]/font")).getText());
+                System.out.println(i.findElement(By.xpath("/following-sibling::tr/td/font/font/b")).getText());
             }
         }
     }
