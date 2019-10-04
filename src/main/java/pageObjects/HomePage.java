@@ -4,6 +4,8 @@ import pageLocators.HomeContent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class HomePage {
     private WebDriver driver;
     public HomeContent homeContent;
@@ -17,5 +19,6 @@ public class HomePage {
         homeContent.userName.sendKeys(userName);
         homeContent.password.sendKeys(password);
         homeContent.signInBtn.click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 }

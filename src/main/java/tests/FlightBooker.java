@@ -1,10 +1,9 @@
 package tests;
 
-import pageObjects.HomePage;
 import pageObjects.FlightFinderPage;
+import pageObjects.HomePage;
 import utils.ExcelUtils;
 import config.Setup;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -31,12 +30,13 @@ public class FlightBooker extends Setup {
 	
 	@Test(dataProvider = "UserRegistration", description="Test Case to Register an user")
 	public void registerUserInformation(String ... registerInfo) throws InterruptedException {
-		FlightFinderPage signIn = new FlightFinderPage(driver);
-		Assert.assertTrue(signIn.verifyCreateAccountTitle(), "something went wrong");
-		signIn.enterEmail(registerInfo[14]);
-		signIn.clickCreateAccountBtn();
+		HomePage homePage = new HomePage(driver);
+		homePage.SignIn(registerInfo[1], registerInfo[2]);
+		FlightFinderPage FlightFinder = new FlightFinderPage(driver);
+		FlightFinder.inputContent(registerInfo);
+		//FlightFinder.clickContinue();
 
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 
 		//Adding Contact Information
 
