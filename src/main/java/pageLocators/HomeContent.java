@@ -10,6 +10,6 @@ public class HomeContent {
     @FindBy(name = "password")
     public WebElement password;
 
-    @FindBy(name = "login")
+    @FindBy(xpath = "//input[@name='login']")
     public WebElement signInBtn;
 }

@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.By;
 import pageObjects.FlightFinderPage;
 import pageObjects.HomePage;
 import utils.ExcelUtils;
@@ -31,15 +32,13 @@ public class FlightBooker extends Setup {
 	@Test(dataProvider = "UserRegistration", description="Test Case to Register an user")
 	public void registerUserInformation(String ... registerInfo) throws InterruptedException {
 		HomePage homePage = new HomePage(driver);
-		homePage.SignIn(registerInfo[1], registerInfo[2]);
+		homePage.SignIn(registerInfo[0], registerInfo[1]);
 		FlightFinderPage FlightFinder = new FlightFinderPage(driver);
 		FlightFinder.inputContent(registerInfo);
-		//FlightFinder.clickContinue();
+		FlightFinder.clickContinue();
 
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 
-		//Adding Contact Information
-
-
+		driver.findElement(By.xpath("//a[contains(text(), 'Home')]")).click();
 	}
 }

@@ -19,31 +19,31 @@ public class FlightFinderPage {
     }
 
     public void inputContent (String[] content) {
-        if (content[3] == "oneway"){
+        if (content[2].equalsIgnoreCase("oneway")){
             flightFinderContent.radioOneWay.click();
         }
-        else if (content[3] == "roundtrip"){
+        else if (content[2].equalsIgnoreCase("roundtrip")){
             flightFinderContent.radioRoundTrip.click();
         }
 
-        new Select(flightFinderContent.passengers).selectByValue(content[4]);
-        new Select(flightFinderContent.origin).selectByVisibleText(content[5]);
-        new Select(flightFinderContent.fromMonth).selectByValue(content[6]);
-        new Select(flightFinderContent.fromDay).selectByValue(content[7]);
-        new Select(flightFinderContent.toPort).selectByVisibleText(content[8]);
-        new Select(flightFinderContent.toMonth).selectByValue(content[9]);
-        new Select(flightFinderContent.toDay).selectByValue(content[10]);
+        new Select(flightFinderContent.passengers).selectByValue(content[3]);
+        new Select(flightFinderContent.origin).selectByVisibleText(content[4]);
+        new Select(flightFinderContent.fromMonth).selectByValue(content[5]);
+        new Select(flightFinderContent.fromDay).selectByValue(content[6]);
+        new Select(flightFinderContent.toPort).selectByVisibleText(content[7]);
+        new Select(flightFinderContent.toMonth).selectByValue(content[8]);
+        new Select(flightFinderContent.toDay).selectByValue(content[9]);
 
-        if (content[11] == "coach"){
+        if (content[10].equalsIgnoreCase("coach")){
             flightFinderContent.coach.click();
         }
-        else if (content[11] == "first"){
+        else if (content[10].equalsIgnoreCase("first")){
             flightFinderContent.first.click();
         }
-        else if (content[11] == "business"){
+        else if (content[10].equalsIgnoreCase("business")){
             flightFinderContent.business.click();
         }
 
-        new Select(flightFinderContent.airline).selectByVisibleText(content[12]);
+        new Select(flightFinderContent.airline).selectByVisibleText(content[11]);
     }
 }
