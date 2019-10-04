@@ -30,7 +30,7 @@ public class SelectFlightPage {
     }
 
     public void getDepartFlights(String[] content) {
-        List<WebElement> departs = selectFlightContent.departTable.findElements(By.xpath("//tr"));
+        List<WebElement> departs = selectFlightContent.departTable.findElements(By.tagName("tr"));
         for (WebElement i : departs){
             System.out.println(i.getTagName());
             if (departs.indexOf(i) > 1 && departs.indexOf(i) % 2 == 0) {
