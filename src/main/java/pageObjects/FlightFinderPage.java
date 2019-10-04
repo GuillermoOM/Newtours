@@ -48,6 +48,6 @@ public class FlightFinderPage {
     }
 
     public boolean verifyFlightFinder() {
-        return flightFinderContent.pageTitle.equals("Find a Flight: Mercury Tours: ");
+        return flightFinderContent.pageTitle.getText().contains("Use our Flight Finder");
     }
 }

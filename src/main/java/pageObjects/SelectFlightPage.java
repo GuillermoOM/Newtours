@@ -2,8 +2,11 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import pageLocators.SelectFlightContent;
+
+import java.util.List;
 
 public class SelectFlightPage {
     private WebDriver driver;
@@ -15,7 +18,7 @@ public class SelectFlightPage {
     }
 
     public boolean verifySelectFlight() {
-        return selectFlightContent.pageTitle.equals("Select a Flight: Mercury Tours");
+        return selectFlightContent.pageTitle.getText().contains("Select your departure");
     }
 
     public boolean verifyDepartTrip(String[] content) {
@@ -24,6 +27,18 @@ public class SelectFlightPage {
 
     public boolean verifyDepartDate(String[] content) {
         return selectFlightContent.departDate.getText().contains(content[5] + "/" + content[6]);
+    }
+
+    public void getDepartFlights(String[] content) {
+        List<WebElement> departs = selectFlightContent.departTable.findElements(By.xpath("/tr"));
+        for (WebElement i : departs){
+            if (departs.indexOf(i) > 1 && departs.indexOf(i) % 2 == 0) {
+                System.out.println("\n" + i.findElement(By.xpath("//b[contains(text(), '" + content[11] + "')]")).getText());
+                System.out.println("Departs: " + i.findElement(By.xpath("//b[contains(text(), '" + content[11] + "')]//parent::font//parent::td//following-sibling::td//child::font")).getText());
+                System.out.println("Stops: " + i.findElement(By.xpath("//b[contains(text(), '" + content[11] + "')]//parent::font//parent::td//following-sibling::td//following-sibling::td//child::font")).getText());
+                System.out.println(i.findElement(By.xpath("//b[contains(text(), 'Price:')]")).getText());
+            }
+        }
     }
 
 }

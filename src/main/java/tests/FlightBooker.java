@@ -48,10 +48,9 @@ public class FlightBooker extends Setup {
 		Assert.assertTrue(selectFlight.verifySelectFlight(), "No se encontro la pagina!");
 		Assert.assertTrue(selectFlight.verifyDepartTrip(registerInfo), "El viaje de salida es incorrecto!");
 		Assert.assertTrue(selectFlight.verifyDepartDate(registerInfo), "La fecha de salida es incorrecta!");
+		selectFlight.getDepartFlights(registerInfo);
 
-
-
-		Thread.sleep(1000);
+		Thread.sleep(10000);
 
 		driver.findElement(By.xpath("//a[contains(text(), 'Home')]")).click();
 	}
