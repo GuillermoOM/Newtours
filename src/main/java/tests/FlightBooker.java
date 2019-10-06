@@ -2,9 +2,7 @@ package tests;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pageObjects.FlightFinderPage;
-import pageObjects.HomePage;
-import pageObjects.SelectFlightPage;
+import pageObjects.*;
 import utils.ExcelUtils;
 import config.Setup;
 import org.testng.annotations.*;
@@ -51,6 +49,24 @@ public class FlightBooker extends Setup {
 		Assert.assertTrue(selectFlight.verifyDepartTrip(registerInfo), "El viaje de salida es incorrecto!");
 		Assert.assertTrue(selectFlight.verifyDepartDate(registerInfo), "La fecha de salida es incorrecta!");
 		selectFlight.getDepartFlights(registerInfo);
+		Assert.assertTrue(selectFlight.verifyReturnTrip(registerInfo), "El viaje de regreso es incorrecto!");
+		Assert.assertTrue(selectFlight.verifyReturnDate(registerInfo), "La fecha de regreso es incorrecta!");
+		selectFlight.getReturnFlights(registerInfo);
+		selectFlight.clickContinue();
+
+		//Book a Flight
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		BookFlightPage bookFlightPage = new BookFlightPage(driver);
+		Assert.assertTrue(bookFlightPage.verifyBookFlight(), "No se encontro la pagina!");
+		//TODO: Validar informacion de vuelo
+		bookFlightPage.inputContent(registerInfo);
+		bookFlightPage.clickContinue();
+
+		//Flight Confirmation
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		FlightConfPage flightConfPage = new FlightConfPage(driver);
+		Assert.assertTrue(flightConfPage.verifyFlightConf(), "No se encontro la pagina!");
+		//TODO: Validar informacion de reserva
 
 		Thread.sleep(10000);
 

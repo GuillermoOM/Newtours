@@ -4,6 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class BookFlightContent {
+    @FindBy(xpath = "//font[contains(text(), 'Please review your travel')]")
+    public WebElement pageTitle;
+
     @FindBy(name = "creditCard")
     public WebElement creditCard;
 
