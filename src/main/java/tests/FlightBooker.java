@@ -38,13 +38,14 @@ public class FlightBooker extends Setup {
 		homePage.SignIn(registerInfo[0], registerInfo[1]);
 
 		//Flight Finder
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		FlightFinderPage flightFinder = new FlightFinderPage(driver);
 		Assert.assertTrue(flightFinder.verifyFlightFinder(), "No se encontro la pagina!");
 		flightFinder.inputContent(registerInfo);
 		flightFinder.clickContinue();
 
 		//Select Flight
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		SelectFlightPage selectFlight = new SelectFlightPage(driver);
 		Assert.assertTrue(selectFlight.verifySelectFlight(), "No se encontro la pagina!");
 		Assert.assertTrue(selectFlight.verifyDepartTrip(registerInfo), "El viaje de salida es incorrecto!");
@@ -54,5 +55,6 @@ public class FlightBooker extends Setup {
 		Thread.sleep(10000);
 
 		driver.findElement(By.xpath("//a[contains(text(), 'Home')]")).click();
+
 	}
 }

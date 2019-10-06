@@ -30,16 +30,17 @@ public class SelectFlightPage {
     }
 
     public void getDepartFlights(String[] content) {
-        List<WebElement> departs = selectFlightContent.departTable.findElements(By.tagName("tr"));
+        List<WebElement> departs = selectFlightContent.departTable.findElements(By.xpath("./tr"));
+        System.out.println(departs.size());
         for (WebElement i : departs){
-            System.out.println(i.getTagName());
+
             if (departs.indexOf(i) > 1 && departs.indexOf(i) % 2 == 0) {
-                System.out.println("\n" + i.findElement(By.xpath("//td[2]//font//b")).getText());
-                System.out.println("Departs: " + i.findElement(By.xpath("//td[3]//font")).getText());
-                System.out.println("Stops: " + i.findElement(By.xpath("//td[4]//font")).getText());
-                System.out.println(i.findElement(By.xpath("//following-sibling::tr//td//font//font//b")).getText());
+                System.out.println("\n" + i.findElement(By.xpath(".//td[2]//font//b")).getText());
+                System.out.println("Departs: " + i.findElement(By.xpath(".//td[3]//font")).getText());
+                System.out.println("Stops: " + i.findElement(By.xpath(".//td[4]//font")).getText());
+                System.out.println(i.findElement(By.xpath(".//following-sibling::tr//td//font//font//b")).getText());
             }
         }
     }
-
 }
+
