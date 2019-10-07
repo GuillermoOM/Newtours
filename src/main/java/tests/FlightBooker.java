@@ -58,7 +58,18 @@ public class FlightBooker extends Setup {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		BookFlightPage bookFlightPage = new BookFlightPage(driver);
 		Assert.assertTrue(bookFlightPage.verifyBookFlight(), "No se encontro la pagina!");
-		//TODO: Validar informacion de vuelo
+        Assert.assertTrue(bookFlightPage.verifyDepartTrip(registerInfo), "El viaje de salida no es correcto!");
+        Assert.assertTrue(bookFlightPage.verifyDepartDate(registerInfo), "La fecha de salida no es correcta!");
+        Assert.assertTrue(bookFlightPage.verifyDepartFlight(selectFlight.departFlight), "El vuelo de salida no es correcto!");
+        Assert.assertTrue(bookFlightPage.verifyDepartClass(registerInfo), "La clase de salida no es correcta!");
+        Assert.assertTrue(bookFlightPage.verifyDepartPrice(selectFlight.departFlight), "La fecha de salida no es correcta!");
+        Assert.assertTrue(bookFlightPage.verifyReturnTrip(registerInfo), "El viaje de regreso no es correcto!");
+        Assert.assertTrue(bookFlightPage.verifyReturnDate(registerInfo), "La fecha de regreso no es correcta!");
+        Assert.assertTrue(bookFlightPage.verifyReturnFlight(selectFlight.departFlight), "El vuelo de regreso no es correcto!");
+        Assert.assertTrue(bookFlightPage.verifyReturnClass(registerInfo), "La clase de regreso no es correcta!");
+        Assert.assertTrue(bookFlightPage.verifyReturnPrice(selectFlight.departFlight), "La fecha de regreso no es correcta!");
+        Assert.assertTrue(bookFlightPage.verifyPassengerNum(registerInfo), "El numero de pasageros no es correcto!");
+        //TODO: Meter datos de pasajeros
 		bookFlightPage.inputContent(registerInfo);
 		bookFlightPage.clickContinue();
 

@@ -13,6 +13,8 @@ import java.util.List;
 public class SelectFlightPage {
     private WebDriver driver;
     public SelectFlightContent selectFlightContent;
+    public String[] departFlight = {"", "", ""};
+    public String[] returnFlight = {"", "", ""};
 
     public SelectFlightPage(WebDriver webDriver) {
         driver = webDriver;
@@ -55,6 +57,12 @@ public class SelectFlightPage {
         }
         Collections.sort(prices);
         selectFlightContent.departTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[1]/input")).click();
+        //Flight
+        departFlight[0] = selectFlightContent.departTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[2]/font/b")).getText();
+        //Time
+        departFlight[1] = selectFlightContent.departTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[3]/font")).getText();
+        //Price
+        departFlight[2] = prices.get(0).toString();
     }
 
     public void getReturnFlights(String[] content) {
@@ -73,6 +81,12 @@ public class SelectFlightPage {
         }
         Collections.sort(prices);
         selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(prices.size()-2).toString()+"')]/preceding-sibling::tr[1]/td[1]/input")).click();
+        //Flight
+        returnFlight[0] = selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[2]/font/b")).getText();
+        //Time
+        returnFlight[1] = selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[3]/font")).getText();
+        //Price
+        returnFlight[2] = prices.get(0).toString();
     }
 
     public void clickContinue() {
