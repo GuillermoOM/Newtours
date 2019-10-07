@@ -76,29 +76,37 @@ public class FlightBooker extends Setup {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		FlightConfPage flightConfPage = new FlightConfPage(driver);
 		Assert.assertTrue(flightConfPage.verifyFlightConf(), "No se encontro la pagina!");
+        System.out.println("\nINFORMACION DE VIAJE:");
+		//Depart
         Assert.assertTrue(flightConfPage.verifyDepartTrip(registerInfo), "El viaje de salida no es correcto!");
         Assert.assertTrue(flightConfPage.verifyDepartDate(registerInfo), "La fecha de salida no es correcta!");
         Assert.assertTrue(flightConfPage.verifyDepartFlight(selectFlight.departFlight), "El vuelo de salida no es correcto!");
         Assert.assertTrue(flightConfPage.verifyDepartClass(registerInfo), "La clase de salida no es correcta!");
         Assert.assertTrue(flightConfPage.verifyDepartTime(selectFlight.departFlight), "El tiempo de salida no es correcto!");
         Assert.assertTrue(flightConfPage.verifyDepartPrice(selectFlight.departFlight), "El precio de salida no es correcto!");
+        //Return
         Assert.assertTrue(flightConfPage.verifyReturnTrip(registerInfo), "El viaje de regreso no es correcto!");
         Assert.assertTrue(flightConfPage.verifyReturnDate(registerInfo), "La fecha de regreso no es correcta!");
         Assert.assertTrue(flightConfPage.verifyReturnFlight(selectFlight.returnFlight), "El vuelo de regreso no es correcto!");
         Assert.assertTrue(flightConfPage.verifyReturnClass(registerInfo), "La clase de regreso no es correcta!");
         Assert.assertTrue(flightConfPage.verifyReturnTime(selectFlight.returnFlight), "El tiempo de regreso no es correcto!");
+        Assert.assertTrue(flightConfPage.verifyReturnPrice(selectFlight.returnFlight), "El precio de regreso no es correcto!");
+        //Passengers
         Assert.assertTrue(flightConfPage.verifyPassengerNum(registerInfo), "El numero de pasajeros no es correcto!");
+        //Billing
         Assert.assertTrue(flightConfPage.verifyBillingAddress(registerInfo), "La direccion de facturacion no es correcta!");
         Assert.assertTrue(flightConfPage.verifyBillingCity(registerInfo), "La ciudad de facturacion no es correcta!");
         Assert.assertTrue(flightConfPage.verifyBillingState(registerInfo), "El estado de facturacion no es correcto!");
         Assert.assertTrue(flightConfPage.verifyBillingZip(registerInfo), "El codigo postal de facturacion no es correcto!");
+        //Delivery
         Assert.assertTrue(flightConfPage.verifyDeliveryAddress(registerInfo), "La direccion de envio no es correcta!");
         Assert.assertTrue(flightConfPage.verifyDeliveryCity(registerInfo), "La ciudad de envio no es correcta!");
         Assert.assertTrue(flightConfPage.verifyDeliveryState(registerInfo), "El estado de envio no es correcto!");
         Assert.assertTrue(flightConfPage.verifyDeliveryZip(registerInfo), "El codigo postal de envio no es correcto!");
-        Assert.assertTrue(flightConfPage.verifyTotalPrice(selectFlight.departFlight, selectFlight.returnFlight), "El precio de regreso no es correcto!");
-		Thread.sleep(10000);
+        //Price
+        Assert.assertTrue(flightConfPage.verifyTotalCost(selectFlight.departFlight, selectFlight.returnFlight, registerInfo), "El precio total no es correcto!");
 
+        Thread.sleep(10000);
 		driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a")).click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}

@@ -34,7 +34,7 @@ public class BookFlightPage {
                 i.findElement(By.xpath("./td/table/tbody/tr[2]/td[2]/input")).sendKeys(excel[13 + (passengerTable.indexOf(i) - 3)*3]);
                 System.out.print(excel[13 + (passengerTable.indexOf(i) - 3)*3]+" ");
                 new Select(i.findElement(By.xpath("./td/table/tbody/tr[2]/td[3]/select"))).selectByVisibleText(excel[14 + (passengerTable.indexOf(i) - 3)*3]);
-                System.out.println("Comida: " + excel[14 + (passengerTable.indexOf(i) - 3)*3]);
+                System.out.println("\nComida: " + excel[14 + (passengerTable.indexOf(i) - 3)*3] + "\n");
             }
         }
         System.out.println("\nTARJETA DE CREDITO:");
@@ -72,7 +72,7 @@ public class BookFlightPage {
         new Select(bookFlightContent.creditCountry).selectByVisibleText(excel[34]);
         System.out.println("Pais: " + excel[34]);
         //Delivery
-        System.out.println("\nEnvio:");
+        System.out.println("\nENVIO:");
         bookFlightContent.delAddress.clear();
         bookFlightContent.delAddress.sendKeys(excel[35]);
         System.out.println("Direccion: " + excel[35]);
