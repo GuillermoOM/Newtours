@@ -82,11 +82,11 @@ public class SelectFlightPage {
         Collections.sort(prices);
         selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(prices.size()-2).toString()+"')]/preceding-sibling::tr[1]/td[1]/input")).click();
         //Flight
-        returnFlight[0] = selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[2]/font/b")).getText();
+        returnFlight[0] = selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(prices.size()-2).toString()+"')]/preceding-sibling::tr[1]/td[2]/font/b")).getText();
         //Time
-        returnFlight[1] = selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(0).toString()+"')]/preceding-sibling::tr[1]/td[3]/font")).getText();
+        returnFlight[1] = selectFlightContent.returnTable.findElement(By.xpath("./*[contains(., '"+prices.get(prices.size()-2).toString()+"')]/preceding-sibling::tr[1]/td[3]/font")).getText();
         //Price
-        returnFlight[2] = prices.get(0).toString();
+        returnFlight[2] = prices.get(prices.size()-2).toString();
     }
 
     public void clickContinue() {

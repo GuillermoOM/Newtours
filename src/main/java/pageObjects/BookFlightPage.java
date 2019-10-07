@@ -1,9 +1,13 @@
 package pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import pageLocators.BookFlightContent;
+
+import java.util.List;
 
 public class BookFlightPage {
 
@@ -19,23 +23,70 @@ public class BookFlightPage {
         return bookFlightContent.pageTitle.getText().contains("Please review your travel");
     }
 
-    public void inputContent (String[] content) {
-        new Select(bookFlightContent.creditCard).selectByVisibleText(content[24]);
-        bookFlightContent.creditNumber.sendKeys(content[25]);
-        new Select(bookFlightContent.expMonth).selectByVisibleText(content[26]);
-        new Select(bookFlightContent.expYear).selectByVisibleText(content[27]);
-        bookFlightContent.creditFirstName.sendKeys(content[28]);
-        bookFlightContent.creditLastName.sendKeys(content[29]);
-        bookFlightContent.creditAddress.sendKeys(content[30]);
-        bookFlightContent.creditCity.sendKeys(content[31]);
-        bookFlightContent.creditState.sendKeys(content[32]);
-        bookFlightContent.creditZip.sendKeys(content[33]);
-        new Select(bookFlightContent.creditCountry).selectByVisibleText(content[34]);
-        bookFlightContent.delAddress.sendKeys(content[35]);
-        bookFlightContent.delCity.sendKeys(content[36]);
-        bookFlightContent.delState.sendKeys(content[37]);
-        bookFlightContent.delZip.sendKeys(content[38]);
-        new Select(bookFlightContent.creditCountry).selectByVisibleText(content[39]);
+    public void inputContent (String[] excel) {
+        List<WebElement> passengerTable = bookFlightContent.passengersTable.findElements(By.xpath("./tr"));
+        System.out.println("\nPASAJEROS:");
+        for (WebElement i : passengerTable){
+            if (passengerTable.indexOf(i) > 2 && passengerTable.indexOf(i) - 2 <= Integer.parseInt(excel[3])) {
+                System.out.println("Nombre Pasajero " + (passengerTable.indexOf(i) - 2) + ":");
+                i.findElement(By.xpath("./td/table/tbody/tr[2]/td[1]/input")).sendKeys(excel[12 + (passengerTable.indexOf(i) - 3)*3]);
+                System.out.print(excel[12 + (passengerTable.indexOf(i) - 3)*3]+" ");
+                i.findElement(By.xpath("./td/table/tbody/tr[2]/td[2]/input")).sendKeys(excel[13 + (passengerTable.indexOf(i) - 3)*3]);
+                System.out.print(excel[13 + (passengerTable.indexOf(i) - 3)*3]+" ");
+                new Select(i.findElement(By.xpath("./td/table/tbody/tr[2]/td[3]/select"))).selectByVisibleText(excel[14 + (passengerTable.indexOf(i) - 3)*3]);
+                System.out.println("Comida: " + excel[14 + (passengerTable.indexOf(i) - 3)*3]);
+            }
+        }
+        System.out.println("\nTARJETA DE CREDITO:");
+        new Select(bookFlightContent.creditCard).selectByVisibleText(excel[24]);
+        System.out.println("Compañia: "+excel[24]);
+        bookFlightContent.creditNumber.sendKeys(excel[25]);
+        System.out.println("Numero: "+excel[25]);
+        if (Integer.parseInt(excel[26]) < 10) {
+            new Select(bookFlightContent.expMonth).selectByVisibleText("0"+excel[26]);
+            System.out.println("Mes Expiracion: "+"0"+excel[26]);
+        }
+        else {
+            new Select(bookFlightContent.expMonth).selectByVisibleText(excel[26]);
+            System.out.println("Mes Expiracion: "+excel[26]);
+        }
+        new Select(bookFlightContent.expYear).selectByVisibleText(excel[27]);
+        System.out.println("Año Expiracion: "+excel[27]);
+        bookFlightContent.creditFirstName.sendKeys(excel[28]);
+        System.out.println("Nombre del Titular: " + excel[28] + " " + excel[29]);
+        bookFlightContent.creditLastName.sendKeys(excel[29]);
+        //Billing
+        System.out.println("\nBILLING:");
+        bookFlightContent.creditAddress.clear();
+        bookFlightContent.creditAddress.sendKeys(excel[30]);
+        System.out.println("Direccion: " + excel[30]);
+        bookFlightContent.creditCity.clear();
+        bookFlightContent.creditCity.sendKeys(excel[31]);
+        System.out.println("Ciudad: " + excel[31]);
+        bookFlightContent.creditState.clear();
+        bookFlightContent.creditState.sendKeys(excel[32]);
+        System.out.println("Estado: " + excel[32]);
+        bookFlightContent.creditZip.clear();
+        bookFlightContent.creditZip.sendKeys(excel[33]);
+        System.out.println("Codigo Postal: " + excel[33]);
+        new Select(bookFlightContent.creditCountry).selectByVisibleText(excel[34]);
+        System.out.println("Pais: " + excel[34]);
+        //Delivery
+        System.out.println("\nEnvio:");
+        bookFlightContent.delAddress.clear();
+        bookFlightContent.delAddress.sendKeys(excel[35]);
+        System.out.println("Direccion: " + excel[35]);
+        bookFlightContent.delCity.clear();
+        bookFlightContent.delCity.sendKeys(excel[36]);
+        System.out.println("Ciudad: " + excel[36]);
+        bookFlightContent.delState.clear();
+        bookFlightContent.delState.sendKeys(excel[37]);
+        System.out.println("Estado: " + excel[37]);
+        bookFlightContent.delZip.clear();
+        bookFlightContent.delZip.sendKeys(excel[38]);
+        System.out.println("Codigo Postal: " + excel[38]);
+        new Select(bookFlightContent.creditCountry).selectByVisibleText(excel[39]);
+        System.out.println("Pais: " + excel[39]);
     }
 
     public boolean verifyDepartTrip(String[] excel){
