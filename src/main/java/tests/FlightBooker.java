@@ -1,15 +1,18 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;
 import pageObjects.*;
 import utils.ExcelUtils;
 import config.Setup;
 import org.testng.annotations.*;
-
 import java.util.concurrent.TimeUnit;
 
 public class FlightBooker extends Setup {
+
 	Object[][] testObjArray;
 	String testCaseWorkBook = System.getProperty("user.dir") + "/resources/FlightRegisterData.xls";
 
@@ -26,36 +29,55 @@ public class FlightBooker extends Setup {
 
 	@BeforeTest
 	public void setUp(){
-		navigateTo();
+		System.setProperty("webdriver.chrome.driver", chromePath);
+		System.setProperty("webdriver.ie.driver", iePath);
+		System.setProperty("webdriver.gecko.driver", firefoxPath);
 	}
 	
 	@Test(dataProvider = "UserRegistration", description="Test Case to Register an user")
 	public void registerUserInformation(String ... registerInfo) throws InterruptedException {
+		if (registerInfo[40].equals("chrome")) {
+			driver = new ChromeDriver();
+		}
+		else if (registerInfo[40].equals("firefox")) {
+			driver = new FirefoxDriver();
+		}
+		else if (registerInfo[40].equals("iexplorer")) {
+			driver = new InternetExplorerDriver();
+		}
+		else {
+			Assert.fail("Error en seleccion de driver!");
+		}
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		navigateTo();
+
 		//Home page
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		HomePage homePage = new HomePage(driver);
 		homePage.SignIn(registerInfo[0], registerInfo[1]);
 
 		//Flight Finder
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		FlightFinderPage flightFinder = new FlightFinderPage(driver);
 		Assert.assertTrue(flightFinder.verifyFlightFinder(), "No se encontro la pagina!");
 		flightFinder.inputContent(registerInfo);
 		flightFinder.clickContinue();
 
 		//Select Flight
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		SelectFlightPage selectFlight = new SelectFlightPage(driver);
 		Assert.assertTrue(selectFlight.verifySelectFlight(), "No se encontro la pagina!");
 		Assert.assertTrue(selectFlight.verifyDepartTrip(registerInfo), "El viaje de salida es incorrecto!");
 		Assert.assertTrue(selectFlight.verifyDepartDate(registerInfo), "La fecha de salida es incorrecta!");
-		selectFlight.getDepartFlights(registerInfo);
+		selectFlight.getDepartFlights();
 		Assert.assertTrue(selectFlight.verifyReturnTrip(registerInfo), "El viaje de regreso es incorrecto!");
 		Assert.assertTrue(selectFlight.verifyReturnDate(registerInfo), "La fecha de regreso es incorrecta!");
 		selectFlight.getReturnFlights(registerInfo);
 		selectFlight.clickContinue();
 
 		//Book a Flight
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		BookFlightPage bookFlightPage = new BookFlightPage(driver);
 		Assert.assertTrue(bookFlightPage.verifyBookFlight(), "No se encontro la pagina!");
         Assert.assertTrue(bookFlightPage.verifyDepartTrip(registerInfo), "El viaje de salida no es correcto!");
@@ -73,7 +95,7 @@ public class FlightBooker extends Setup {
 		bookFlightPage.clickContinue();
 
 		//Flight Confirmation
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		FlightConfPage flightConfPage = new FlightConfPage(driver);
 		Assert.assertTrue(flightConfPage.verifyFlightConf(), "No se encontro la pagina!");
         System.out.println("\nINFORMACION DE VIAJE:");
@@ -106,8 +128,9 @@ public class FlightBooker extends Setup {
         //Price
         Assert.assertTrue(flightConfPage.verifyTotalCost(selectFlight.departFlight, selectFlight.returnFlight, registerInfo), "El precio total no es correcto!");
 
-        Thread.sleep(10000);
+        Thread.sleep(2000);
 		driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a")).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.close();
 	}
 }

@@ -41,7 +41,7 @@ public class SelectFlightPage {
         return selectFlightContent.returnDate.getText().contains(content[8] + "/" + content[9]);
     }
 
-    public void getDepartFlights(String[] content) {
+    public void getDepartFlights() {
         List<Integer> prices = new ArrayList<Integer>();
         List<WebElement> departs = selectFlightContent.departTable.findElements(By.xpath("./tr"));
         System.out.println("\nDEPART FLIGHTS");

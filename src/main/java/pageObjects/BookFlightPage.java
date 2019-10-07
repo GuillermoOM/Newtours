@@ -85,7 +85,10 @@ public class BookFlightPage {
         bookFlightContent.delZip.clear();
         bookFlightContent.delZip.sendKeys(excel[38]);
         System.out.println("Codigo Postal: " + excel[38]);
-        new Select(bookFlightContent.creditCountry).selectByVisibleText(excel[39]);
+        new Select(bookFlightContent.delCountry).selectByVisibleText(excel[39]);
+        if (!excel[39].equals("UNITED STATES")) {
+            driver.switchTo().alert().accept();
+        }
         System.out.println("Pais: " + excel[39]);
     }
 
